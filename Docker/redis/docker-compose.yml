@@ -1,41 +1,50 @@
-version: '3.10'
-
 services:
-  user-service:
+  reverse-proxy:
+        image: traefik:v2.11
+        container_name: traefik
+        restart: unless-stopped
+        security_opt:
+            - no-new-privileges:true
+        ports:
+            - 80:80
+            - 443:443
+            - 6379:6379
+            - 5432:5432
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./_config/traefik.yml:/etc/traefik/traefik.yml:ro
+            - ./_config/config.yml:/etc/traefik/config.yml:ro
+            - ./_certs:/etc/certs:ro
+        networks:
+            - mired
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.traefik=true"
+  redis:
+    image: redis:7-bookworm
     restart: always
-    build: ./user_microservice/app/app
     volumes:
-      - ./user_microservice/app/app:/app
-    ports:
-      - "5000:5000"
+      - ./data:/data
+      - ./data/redis.conf:/data/redis.conf
+    command: redis-server /data/redis.conf --loglevel notice --requirepass ${REDIS_PASSWORD}
+    #ports:
+    #  - "6379:6379"
     networks:
-      - app-tier
-    depends_on:
-      - db
-    image: ms:v1.0.0
-    container_name: user-service
-  
-
+      - mired
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.redis.entryPoints=redis"
+      - "traefik.tcp.routers.redis.rule=HostSNI(`*`)"
+      - "traefik.tcp.services.redis.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.redis.service=redis"
+  user_microservice:
+    container_name: micro1
+    image: user_microservice:V1.0.0
+    networks:
+      - mired
+    ports:
+      - "5001:5000"
+ 
 networks:
-  app-tier:
+  mired:
     driver: bridge
-volumes:
-  db-data:
-    driver: local
-
-  db:
-    image: postgres:13
-  volumes:
-    - db-data:/var/lib/postgresql/data
-  environment:
-    POSTGRES_USER: user
-    POSTGRES_PASSWORD: password
-    POSTGRES_DB: user_db
-  ports:
-    - "5432:5432"
-  networks:
-    - app-tier
-  container_name: db
- 
- 
-    Enter fullscreen mode
