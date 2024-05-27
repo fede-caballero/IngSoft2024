@@ -1,0 +1,3 @@
+cambiar nombre a .env-example y ponerle datos de usuario y nombre de db propio
+cambiar credenciales en config.sql con los datos del .env
+
