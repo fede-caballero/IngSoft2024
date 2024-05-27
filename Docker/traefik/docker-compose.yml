@@ -1,23 +1,30 @@
 services:
   traefik:
     image: traefik:v2.11
-    command:
-      - "--api.insecure=true" # Solo para desarrollo, en producción debe ser seguro
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.db.address=:5432/tcp" # Configura una entrada TCP en el puerto 5432
-      - "--providers.docker.defaultrule=Host(`{{ index .Labels \"com.docker.compose.service\" }}.localhost`)"
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - "80:80"
-      - "8080:8080" # Puerto del panel de Traefik
-      - "5432:5432" # Exponer el puerto 5432
+      - 80:80 
+      - 8080:8080 # Puerto del panel de Traefik
+      - 5432:5432  # Exponer el puerto 5432
+      - 6379:6379  # Exponer el puerto 6379
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./_config/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./_config/config.yml:/etc/traefik/config.yml:ro
+      - ./_certs:/etc/certs:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik=true
     networks:
       - mired2
 
   ms1:
     image: ms1:1.0.1
+    build: 
+      context: /home/fede-caballero/UM/ingenieria/cuartoAnio/ingSoftware/Racing_systems_microservices/user_microservice/
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ms1.rule=Host(`ms1.localhost`)"
@@ -26,7 +33,6 @@ services:
       - db
     networks:
       - mired2
-
 
   db:
     image: postgres:16.2-bullseye
@@ -48,3 +54,4 @@ networks:
 
 volumes:
   postgres_data:
+    external: true

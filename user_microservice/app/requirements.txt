@@ -4,6 +4,9 @@ charset-normalizer==3.3.2
 circuitbreaker==2.0.0
 click==8.1.7
 Flask==3.0.2
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy==3.1.1
+Flask-Testing==0.8.1
 flask-marshmallow==0.15.0
 idna==3.6
 itsdangerous==2.1.2
