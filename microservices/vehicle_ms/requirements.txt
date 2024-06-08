@@ -8,4 +8,5 @@ proofdock-chaos-middleware-python==0.2.3
 flask_sqlalchemy == 3.0.5
 sqlalchemy_filters == 0.13.0
 flask-migrate == 4.0.4
-psycopg2 == 2.9.7
+psycopg2-binary==2.9.9
+Flask-RESTful == 0.3.10
