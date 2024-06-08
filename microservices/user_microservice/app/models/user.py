@@ -14,3 +14,4 @@ class User(db.Model):
     address: str = Column(String(100))
     phone: str = Column(String(9))
     role: str = Column(String(20))
+    
