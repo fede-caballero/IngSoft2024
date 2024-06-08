@@ -26,8 +26,7 @@ def create_app() -> None:
     db_host = os.getenv("DB_HOST")
     db_port = os.getenv("DB_PORT")
     db_name = os.getenv("DB_NAME")
-    print("Directorio actual:", os.getcwd())
-    print(db_user, db_password, db_host, db_port, db_name)
+
 
     
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,11 +48,11 @@ def create_app() -> None:
     
     from app.resources import home, GetAllVehicles, FindVehicleById, UpdateVehicle, AddVehicle, DeleteVehicle
     app.register_blueprint(home, url_prefix='/api/v1')
-    api.add_resource(GetAllVehicles, '/get-all-autos')
-    api.add_resource(AddVehicle, '/add-auto')
+    api.add_resource(GetAllVehicles, '/get-all-vehicles')
+    api.add_resource(AddVehicle, '/add-vehicle')
     api.add_resource(FindVehicleById, '/auto/<int:vehicle_id>')
-    api.add_resource(DeleteVehicle, '/delete-auto/<int:vehicle_id>')
-    api.add_resource(UpdateVehicle, '/update-auto/<int:vehicle_id>')
+    api.add_resource(DeleteVehicle, '/delete-vehicle/<int:vehicle_id>')
+    api.add_resource(UpdateVehicle, '/update-vehicle/<int:vehicle_id>')
     
     @app.shell_context_processor    
     def ctx():
