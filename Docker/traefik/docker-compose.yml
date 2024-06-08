@@ -14,7 +14,7 @@ services:
       - "./_certs:/etc/certs:ro"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik=true"
+      - "traefik.http.routegitrs.traefik=true"
     networks:
       - mired2
 

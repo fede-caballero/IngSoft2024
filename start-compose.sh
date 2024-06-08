@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Asegúrate de que no haya espacios alrededor del signo igual en la declaración de la variable
-ROOT_DIR="/media/d3xtro/60CC3B634C20DFD06/4to/INGENIERIA-DE-SOFT/proyecto/"
+ROOT_DIR="/home/fede-caballero/UM/ingenieria/cuartoAnio/ingSoftware/Racing_systems_microservices"
 # Directorios donde están tus archivos docker-compose.yml
-MAIN_DIRS=("$ROOT_DIR/dockers/traefik" "$ROOT_DIR/dockers/redis" "$ROOT_DIR/dockers/postgres" "$ROOT_DIR/ms")
+MAIN_DIRS=("$ROOT_DIR/Docker/traefik" "$ROOT_DIR/Docker/redis" "$ROOT_DIR/Docker/postgres" "$ROOT_DIR/microservices")
 
 echo "Seleccione una opción:"
 echo "1) Iniciar servicios"
