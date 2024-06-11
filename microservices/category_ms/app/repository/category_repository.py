@@ -1,10 +1,10 @@
-from app.models import category
+from app.models.category.category_model import Category
 from app.repository.repository_base import Read, Create, Delete
 from app import db
 
 class CategoryRepository(Read, Create, Delete):
     def __init__(self):
-        self.__model = category()
+        self.__model = Category
     
     # Read Section
     def find_all(self):

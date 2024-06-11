@@ -1,10 +1,10 @@
-from app.models import category
+from microservices.category_ms.app.models.category.category_model import Category
 from app import db
-from app.repository import category_repository
+from app.repository.category_repository import CategoryRepository
 
 class CategoryService:
     def __init__(self):
-        self.__repo = category_repository()
+        self.__repo = CategoryRepository()
 
     def create(self,entity):
         return self.__repo.create(entity)
@@ -41,5 +41,5 @@ class CategoryService:
     
 
     def delete(self, entity_id):
-        return self.__repo.delte(entity_id)
+        return self.__repo.delete(entity_id)
     
