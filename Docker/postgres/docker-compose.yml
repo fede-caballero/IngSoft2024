@@ -15,12 +15,13 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
-      - PGDATA=/var/lib/postgresql/data
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ./_data:/var/lib/postgresql
-      - ./config.sql:/docker-entrypoint-initdb.d/config.sql
+      - ./_data:/var/lib/postgresql/data
+      - ./_sql:/docker-entrypoint-initdb.d
     restart: always
 
 networks:
   mired2:
     external: true 
+
