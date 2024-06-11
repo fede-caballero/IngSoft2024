@@ -1,4 +1,4 @@
-from microservices.category_ms.app.models.category.category_model import Category
+from app.models.category.category_model import Category
 from marshmallow import fields, Schema, post_load
 
 class CategorySchema(Schema):

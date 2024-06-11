@@ -1,4 +1,4 @@
-from category_model import Category
+from .category_model import Category
 
 class CategoryBuilder:
     def __init__(self, time_category, tyre_type, gender):

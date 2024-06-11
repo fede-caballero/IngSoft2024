@@ -1,4 +1,4 @@
-from microservices.category_ms.app.models.category.category_model import Category
+from app.models.category.category_model import Category
 from app import db
 from app.repository.category_repository import CategoryRepository
 

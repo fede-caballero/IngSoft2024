@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   ms1:
     container_name: ms1
@@ -30,18 +32,25 @@ services:
 
   category-ms:
     container_name: category-ms
+    build: .
     image: category-ms:1.0.1
     networks:
       mired2:
         aliases:
           - category-ms.um.localhost
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=1234456
+      - DB_HOST=postgresql
+      - DB_PORT=5432
+      - DB_NAME=postgres
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.category-ms.rule=Host(`category-ms.um.localhost`)"
       - "traefik.http.routers.category-ms.tls=true"
       - "traefik.docker.network=mired2"
       - "traefik.http.services.category-ms.loadbalancer.server.port=5003"
+
 networks:
   mired2:
     external: true
-
