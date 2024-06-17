@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String
 
 @dataclass
 class Vehicle(db.Model):
-    __tablename__ = 'Vehicle'
+    __tablename__ = 'vehicle'
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     time: str = Column(String(250))
     tyre_type: str = Column(String(250))

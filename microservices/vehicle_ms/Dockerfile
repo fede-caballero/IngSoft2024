@@ -4,6 +4,7 @@ ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
 ENV PATH=$PATH:/home/vehicle-ms/.local/bin
 
+
 RUN useradd --create-home --home-dir /home/vehicle-ms vehicle-ms
 
 WORKDIR /home/vehicle-ms
@@ -21,3 +22,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5002
 
 CMD [ "python", "./app.py" ]
+
