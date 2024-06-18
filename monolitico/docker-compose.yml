@@ -1,0 +1,20 @@
+services:
+  monolitic:
+    container_name: monolitic
+    image: monolityc:1.0.1
+    env_file:
+      - .env
+    networks:
+      - mired2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.monolitic.rule=Host(`monolitico.um.localhost`)"
+      - "traefik.http.routers.monolitic.tls=true"
+      - "traefik.docker.network=mired2"
+      - "traefik.http.services.monolitic.loadbalancer.server.port=5000"
+      - "traefik.http.middlewares.monolitic.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+      - "traefik.http.middlewares.monolitic.circuitbreaker.expression=ResponseCodeRatio(500, 600, 0, 600) > 0.25"
+      - "traefik.http.middlewares.monolitic.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+networks:
+  mired2:
+      external: true
